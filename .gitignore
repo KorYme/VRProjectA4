@@ -1,3 +1,10 @@
+# Rider files
+.idea/
+
+# VS Code
+.vscode/
+*.code-workspace
+
 # Visual Studio 2015 user specific files
 .vs/
 
@@ -46,18 +53,18 @@ SourceArt/**/*.png
 SourceArt/**/*.tga
 
 # Binary Files
-Binaries/*
-Plugins/**/Binaries/*
+Binaries/
+Plugins/*/Binaries/*
 
 # Modules and Plugins Files exception
 !Binaries/Win64
 Binaries/Win64/*
 !Binaries/Win64/UnrealEditor.modules
 # PROJECT NAME HERE
-!Binaries/Win64/VRProjectA4.target
+!Binaries/Win64/VRProjectA4Editor.target
 !Binaries/Win64/UnrealEditor-VRProjectA4.dll
 # ADD MODULES AND PLUGINS IN PROJECTS TO MAKE GA AND GD LAUNCH EDITOR)
-# !Binaries/Win64/UnrealEditor-LocalMultiplayer.dll
+
 
 # Builds
 Build/*
@@ -78,7 +85,7 @@ Saved/*
 
 # Compiled source files for the engine to use
 Intermediate/*
-Plugins/**/Intermediate/*
+Plugins/*/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
