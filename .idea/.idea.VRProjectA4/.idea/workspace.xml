@@ -15,7 +15,6 @@
     <list default="true" id="7974815d-bffb-4d4f-ace7-47d9635ebc3c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.VRProjectA4/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.VRProjectA4/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Rope/BP_Rope.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Rope/BP_Rope.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Rope/LV_TestRope.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Rope/LV_TestRope.umap" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +39,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "C++ Project.VRProjectA4.executor": "Debug",
+    "C++ Project.VRProjectA4.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "Rope",
     "node.js.detected.package.eslint": "true",
@@ -181,7 +180,7 @@
       <updated>1733221091238</updated>
       <workItem from="1733221093353" duration="2250000" />
       <workItem from="1733259590819" duration="2066000" />
-      <workItem from="1733300220745" duration="1548000" />
+      <workItem from="1733300220745" duration="3363000" />
     </task>
     <servers />
   </component>
