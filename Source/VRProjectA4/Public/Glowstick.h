@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "Glowstick.generated.h"
 
+class UPointLightComponent;
+
 UCLASS()
 class VRPROJECTA4_API AGlowstick : public AActor
 {
@@ -24,10 +26,13 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 protected:
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly, Category = "Glowstick")
+	float InitialDistance = 0.f;
+	
+	UPROPERTY(BlueprintReadOnly, Category = "Glowstick")
 	bool IsGrabbed = false;
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly, Category = "Glowstick")
 	bool IsCracked = false;
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Glowstick")
@@ -36,21 +41,33 @@ protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Glowstick")
 	float TimeToMaxIntensity = 5.f;
 
+	UPROPERTY(BlueprintReadOnly, Category = "Glowstick")
+	TObjectPtr<UStaticMeshComponent> MainMeshComponent;
+	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Glowstick")
-	UMaterial *GlowstickMaterial;	
+	TSoftObjectPtr<UMaterial> GlowstickMaterial;
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	TArray<TObjectPtr<USceneComponent>> GrabComponents;
-
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Glowstick")
+	TObjectPtr<UPointLightComponent> LightComponent;
+	
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Glowstick")
+	TArray<UActorComponent*> GrabComponents;
+	
 	UFUNCTION(BlueprintCallable, Category = "Glowstick")
 	void Grabbed();
 
 	UFUNCTION(BlueprintCallable, Category = "Glowstick")
-	bool CheckIsCracked();
+	bool CheckIsCracked() const;
 	
 	UFUNCTION(BlueprintCallable, Category = "Glowstick")
 	void Cracked();
 
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Glowstick")
 	void CustomGrab();
+
+	UFUNCTION(BlueprintCallable, Category = "Glowstick")
+	TSoftObjectPtr<UMaterial> GetGlowMaterial() const { return GlowstickMaterial; }
+
+	UFUNCTION(BlueprintCallable, Category = "Glowstick")
+	void SetGlowMaterial(TSoftObjectPtr<UMaterial> Material) { GlowstickMaterial = Material; }
 };
