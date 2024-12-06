@@ -22,8 +22,8 @@ void AGlowstick::BeginPlay()
 			LightComponent->SetIntensity(0.f);
 		}
 		if (GrabComponents[i]->GetName().Contains("MainMesh")) {
-			MainMeshComponent = Cast<UStaticMeshComponent>(GrabComponents[i]);
-			GlowstickMaterial = MainMeshComponent->GetMaterial(0);
+			MainMeshComponent = Cast<USkeletalMeshComponent>(GrabComponents[i]);
+			GlowstickMaterial = MainMeshComponent->GetMaterial(1);
 			Cast<UMaterialInstanceDynamic>(GlowstickMaterial.Get())->SetScalarParameterValue("Glow Intensity", 0.f);
 		}
 		if (!GrabComponents[i]->GetName().Contains("GrabComponent")) {

@@ -42,7 +42,7 @@ protected:
 	float TimeToMaxIntensity = 5.f;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Glowstick")
-	TObjectPtr<UStaticMeshComponent> MainMeshComponent;
+	TObjectPtr<USkeletalMeshComponent> MainMeshComponent;
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Glowstick")
 	TSoftObjectPtr<UMaterial> GlowstickMaterial;
