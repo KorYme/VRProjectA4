@@ -24,7 +24,7 @@ void AGlowstick::BeginPlay()
 		if (GrabComponents[i]->GetName().Contains("MainMesh")) {
 			MainMeshComponent = Cast<USkeletalMeshComponent>(GrabComponents[i]);
 			GlowstickMaterial = MainMeshComponent->GetMaterial(1);
-			Cast<UMaterialInstanceDynamic>(GlowstickMaterial.Get())->SetScalarParameterValue("Glow Intensity", 0.f);
+			//Cast<UMaterialInstanceDynamic>(GlowstickMaterial.Get())->SetScalarParameterValue("Glow Intensity", 0.f);
 		}
 		if (!GrabComponents[i]->GetName().Contains("GrabComponent")) {
 			GrabComponents.RemoveAt(i);
@@ -73,7 +73,7 @@ void AGlowstick::Cracked()
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Magenta, TEXT("Cracked"));
 	IsCracked = true;
 	PrimaryActorTick.bCanEverTick = false;
-	Cast<UMaterialInstanceDynamic>(GlowstickMaterial.Get())->SetScalarParameterValue("Glow Intensity", 3.f);
+	//Cast<UMaterialInstanceDynamic>(GlowstickMaterial.Get())->SetScalarParameterValue("Glow Intensity", 3.f);
 	LightComponent->SetIntensity(MaxIntensity);
 }
 
