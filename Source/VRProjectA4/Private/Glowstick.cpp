@@ -1,4 +1,4 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
+// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "VRProjectA4/Public/Glowstick.h"
@@ -22,8 +22,8 @@ void AGlowstick::BeginPlay()
 			LightComponent->SetIntensity(0.f);
 		}
 		if (GrabComponents[i]->GetName().Contains("MainMesh")) {
-			MainMeshComponent = Cast<USkeletalMeshComponent>(GrabComponents[i]);
-			GlowstickMaterial = MainMeshComponent->GetMaterial(1);
+			MainMeshComponent = Cast<UStaticMeshComponent>(GrabComponents[i]);
+			GlowstickMaterial = MainMeshComponent->GetMaterial(0);
 			Cast<UMaterialInstanceDynamic>(GlowstickMaterial.Get())->SetScalarParameterValue("Glow Intensity", 0.f);
 		}
 		if (!GrabComponents[i]->GetName().Contains("GrabComponent")) {

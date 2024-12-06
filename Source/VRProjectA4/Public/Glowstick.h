@@ -1,4 +1,4 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
+// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -42,7 +42,7 @@ protected:
 	float TimeToMaxIntensity = 5.f;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Glowstick")
-	TObjectPtr<USkeletalMeshComponent> MainMeshComponent;
+	TObjectPtr<UStaticMeshComponent> MainMeshComponent;
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Glowstick")
 	TSoftObjectPtr<UMaterial> GlowstickMaterial;
