@@ -41,6 +41,9 @@ protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Glowstick")
 	float TimeToMaxIntensity = 5.f;
 
+	UPROPERTY()
+	float CurrentTime = 0.f;
+	
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Glowstick")
 	FVector InitialGrabLocation;
 	
@@ -73,6 +76,9 @@ protected:
 	
 	UFUNCTION(BlueprintCallable, Category = "Glowstick")
 	void Cracked();
+
+	UFUNCTION(BlueprintCallable, Category = "Glowstick")
+	void UpdateLightIntensity(const float DeltaTime);
 	
 	UFUNCTION(BlueprintCallable, Category = "Glowstick")
 	UActorComponent* GetGrabComponent(FString const &Name);

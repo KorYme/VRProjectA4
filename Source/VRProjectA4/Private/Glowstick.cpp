@@ -15,6 +15,7 @@ AGlowstick::AGlowstick()
 void AGlowstick::BeginPlay()
 {
 	Super::BeginPlay();
+	CurrentTime = 0.f;
 	GrabComponents = K2_GetComponentsByClass(USceneComponent::StaticClass());
 	for (int i = GrabComponents.Num() - 1; i >= 0; i--) {
 		if (Cast<UPointLightComponent>(GrabComponents[i])) {
@@ -51,6 +52,9 @@ void AGlowstick::BeginPlay()
 void AGlowstick::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	if (IsCracked && CurrentTime < TimeToMaxIntensity) {
+		UpdateLightIntensity(DeltaTime);
+	}
 	if (IsCracked || !IsGrabbed) {
 		return;
 	}
@@ -104,13 +108,22 @@ bool AGlowstick::CheckIsCracked() const
 	return false;
 }
 
+void AGlowstick::UpdateLightIntensity(const float DeltaTime)
+{
+	if (CurrentTime >= TimeToMaxIntensity) {
+		return;
+	}
+	CurrentTime += DeltaTime;
+	LightComponent->SetIntensity(FMath::Lerp(0.f, MaxIntensity, CurrentTime / TimeToMaxIntensity));
+}
+
 void AGlowstick::Cracked()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Magenta, TEXT("Cracked"));
 	IsCracked = true;
 	PrimaryActorTick.bCanEverTick = false;
 	//Cast<UMaterialInstanceDynamic>(GlowstickMaterial.Get())->SetScalarParameterValue("Glow Intensity", 3.f);
-	LightComponent->SetIntensity(MaxIntensity);
+	//LightComponent->SetIntensity(MaxIntensity);
 }
 
 void AGlowstick::CustomGrab_Implementation()
