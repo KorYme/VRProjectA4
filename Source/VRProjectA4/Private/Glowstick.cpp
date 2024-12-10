@@ -8,13 +8,14 @@
 // Sets default values
 AGlowstick::AGlowstick()
 {
-	PrimaryActorTick.bCanEverTick = false;
+	
 }
 
 // Called when the game starts or when spawned
 void AGlowstick::BeginPlay()
 {
 	Super::BeginPlay();
+	CurrentTime = 0.f;
 	GrabComponents = K2_GetComponentsByClass(USceneComponent::StaticClass());
 	for (int i = GrabComponents.Num() - 1; i >= 0; i--) {
 		if (Cast<UPointLightComponent>(GrabComponents[i])) {
@@ -26,6 +27,9 @@ void AGlowstick::BeginPlay()
 			GlowstickMaterial = MainMeshComponent->GetMaterial(1);
 			//Cast<UMaterialInstanceDynamic>(GlowstickMaterial.Get())->SetScalarParameterValue("Glow Intensity", 0.f);
 		}
+		if (GrabComponents[i]->GetName().Contains("Upper")) {
+			InitialGrabLocation = Cast<USceneComponent>(GrabComponents[i])->GetComponentLocation();
+		}
 		if (!GrabComponents[i]->GetName().Contains("GrabComponent")) {
 			GrabComponents.RemoveAt(i);
 		}
@@ -36,12 +40,25 @@ void AGlowstick::BeginPlay()
 		
 		InitialDistance = (GrabComponentUpper->GetComponentLocation() - GrabComponentLower->GetComponentLocation()).Size();
 	}
+	TArray<FName> Bones = MainMeshComponent->GetAllSocketNames();
+	for (int i = Bones.Num() - 1; i >= 0; i--) {
+		if (Bones[i].ToString().Contains("bout_haut")) {
+			UpperBones = Bones[i];
+		}
+	}
 }
 
 // Called every frame
 void AGlowstick::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	if (IsCracked && CurrentTime < TimeToMaxIntensity) {
+		UpdateLightIntensity(DeltaTime);
+	}
+	if (IsCracked || !IsGrabbed) {
+		return;
+	}
+	MoveBones();
 	if (CheckIsCracked()) {
 		Cracked();
 	}
@@ -49,9 +66,32 @@ void AGlowstick::Tick(float DeltaTime)
 
 void AGlowstick::Grabbed()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, TEXT("Grabbed"));
-	PrimaryActorTick.bCanEverTick = true;
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Magenta, TEXT("Grabbed"));
 	IsGrabbed = true;
+}
+
+void AGlowstick::OnRelease()
+{
+	Cast<USceneComponent>(GetGrabComponent("Upper"))->SetWorldLocation(InitialGrabLocation);
+}
+
+void AGlowstick::MoveBones()
+{
+	const USceneComponent* GrabComponentUpper = Cast<USceneComponent>(GetGrabComponent("Upper"));
+	FVector OutVector;
+	FRotator OutRotator;
+	
+	MainMeshComponent->TransformFromBoneSpace(UpperBones, GrabComponentUpper->K2_GetComponentLocation(), FRotator(0,0,0), OutVector, OutRotator);
+}
+
+UActorComponent* AGlowstick::GetGrabComponent(FString const &Name)
+{
+	for (int i = 0; i < GrabComponents.Num(); i++) {
+		if (GrabComponents[i]->GetName().Contains(Name)) {
+			return GrabComponents[i];
+		}
+	}
+	return nullptr;
 }
 
 bool AGlowstick::CheckIsCracked() const
@@ -61,11 +101,20 @@ bool AGlowstick::CheckIsCracked() const
 		const USceneComponent* GrabComponentUpper = Cast<USceneComponent>(GrabComponents[i + 1]);
 		const float Distance = (GrabComponentUpper->GetComponentLocation() - GrabComponentLower->GetComponentLocation()).Size();
 		
-		if (Distance < InitialDistance) {
+		if (Distance != InitialDistance) {
 			return true;
 		}
 	}
 	return false;
+}
+
+void AGlowstick::UpdateLightIntensity(const float DeltaTime)
+{
+	if (CurrentTime >= TimeToMaxIntensity) {
+		return;
+	}
+	CurrentTime += DeltaTime;
+	LightComponent->SetIntensity(FMath::Lerp(0.f, MaxIntensity, CurrentTime / TimeToMaxIntensity));
 }
 
 void AGlowstick::Cracked()
@@ -74,7 +123,7 @@ void AGlowstick::Cracked()
 	IsCracked = true;
 	PrimaryActorTick.bCanEverTick = false;
 	//Cast<UMaterialInstanceDynamic>(GlowstickMaterial.Get())->SetScalarParameterValue("Glow Intensity", 3.f);
-	LightComponent->SetIntensity(MaxIntensity);
+	//LightComponent->SetIntensity(MaxIntensity);
 }
 
 void AGlowstick::CustomGrab_Implementation()
