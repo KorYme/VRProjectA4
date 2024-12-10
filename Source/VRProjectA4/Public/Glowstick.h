@@ -29,7 +29,7 @@ protected:
 	UPROPERTY(BlueprintReadOnly, Category = "Glowstick")
 	float InitialDistance = 0.f;
 	
-	UPROPERTY(BlueprintReadOnly, Category = "Glowstick")
+	UPROPERTY(BlueprintReadWrite, Category = "Glowstick")
 	bool IsGrabbed = false;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Glowstick")
@@ -41,6 +41,15 @@ protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Glowstick")
 	float TimeToMaxIntensity = 5.f;
 
+	UPROPERTY()
+	float CurrentTime = 0.f;
+	
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Glowstick")
+	FVector InitialGrabLocation;
+	
+	UPROPERTY(BlueprintReadOnly, Category = "Glowstick")
+	FName UpperBones;
+	
 	UPROPERTY(BlueprintReadOnly, Category = "Glowstick")
 	TObjectPtr<USkeletalMeshComponent> MainMeshComponent;
 	
@@ -57,14 +66,26 @@ protected:
 	void Grabbed();
 
 	UFUNCTION(BlueprintCallable, Category = "Glowstick")
+	void OnRelease();
+	
+	UFUNCTION(BlueprintCallable, Category = "Glowstick")
+	void MoveBones();
+	
+	UFUNCTION(BlueprintCallable, Category = "Glowstick")
 	bool CheckIsCracked() const;
 	
 	UFUNCTION(BlueprintCallable, Category = "Glowstick")
 	void Cracked();
 
+	UFUNCTION(BlueprintCallable, Category = "Glowstick")
+	void UpdateLightIntensity(const float DeltaTime);
+	
+	UFUNCTION(BlueprintCallable, Category = "Glowstick")
+	UActorComponent* GetGrabComponent(FString const &Name);
+	
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Glowstick")
 	void CustomGrab();
-
+	
 	UFUNCTION(BlueprintCallable, Category = "Glowstick")
 	TSoftObjectPtr<UMaterial> GetGlowMaterial() const { return GlowstickMaterial; }
 
