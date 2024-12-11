@@ -8,7 +8,6 @@
 
 class UPointLightComponent;
 
-#pragma optimize("", off)
 UCLASS()
 class VRPROJECTA4_API AGlowstick : public AActor
 {
@@ -92,8 +91,4 @@ protected:
 
 	UFUNCTION(BlueprintCallable, Category = "Glowstick")
 	void SetGlowMaterial(TSoftObjectPtr<UMaterial> Material) { GlowstickMaterial = Material; }
-
-	UFUNCTION(BlueprintCallable, Category = "Glowstick")
-	void SetPointLight(UPointLightComponent* Target) { LightComponent = Target; }
 };
-#pragma optimize("", on)
