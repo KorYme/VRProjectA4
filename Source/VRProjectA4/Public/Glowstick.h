@@ -8,6 +8,7 @@
 
 class UPointLightComponent;
 
+#pragma optimize("", off)
 UCLASS()
 class VRPROJECTA4_API AGlowstick : public AActor
 {
@@ -41,8 +42,11 @@ protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Glowstick")
 	float TimeToMaxIntensity = 5.f;
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 	float CurrentTime = 0.f;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Glowstick")
+	float ShakeValue = 0.01f;
 	
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Glowstick")
 	FVector InitialGrabLocation;
@@ -53,7 +57,7 @@ protected:
 	UPROPERTY(BlueprintReadOnly, Category = "Glowstick")
 	TObjectPtr<USkeletalMeshComponent> MainMeshComponent;
 	
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Glowstick")
+	UPROPERTY(BlueprintReadWrite)
 	TSoftObjectPtr<UMaterial> GlowstickMaterial;
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Glowstick")
@@ -78,6 +82,9 @@ protected:
 	void Cracked();
 
 	UFUNCTION(BlueprintCallable, Category = "Glowstick")
+	void Shake();
+	
+	UFUNCTION(BlueprintCallable, Category = "Glowstick")
 	void UpdateLightIntensity(const float DeltaTime);
 	
 	UFUNCTION(BlueprintCallable, Category = "Glowstick")
@@ -91,4 +98,8 @@ protected:
 
 	UFUNCTION(BlueprintCallable, Category = "Glowstick")
 	void SetGlowMaterial(TSoftObjectPtr<UMaterial> Material) { GlowstickMaterial = Material; }
+
+	UFUNCTION(BlueprintCallable, Category = "Glowstick")
+	void SetPointLight(UPointLightComponent* Target) { LightComponent = Target; }
 };
+#pragma optimize("", on)
