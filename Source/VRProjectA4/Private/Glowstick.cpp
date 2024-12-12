@@ -126,6 +126,11 @@ void AGlowstick::Cracked()
 	//LightComponent->SetIntensity(MaxIntensity);
 }
 
+void AGlowstick::Shake()
+{
+	CurrentTime += ShakeValue;
+}
+
 void AGlowstick::CustomGrab_Implementation()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("CustomGrab_Implementation"));
