@@ -42,7 +42,7 @@ protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Glowstick")
 	float TimeToMaxIntensity = 5.f;
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	UPROPERTY(BlueprintReadWrite)
 	float CurrentTime = 0.f;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Glowstick")
@@ -57,7 +57,7 @@ protected:
 	UPROPERTY(BlueprintReadOnly, Category = "Glowstick")
 	TObjectPtr<USkeletalMeshComponent> MainMeshComponent;
 	
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Glowstick")
+	UPROPERTY(BlueprintReadWrite)
 	TSoftObjectPtr<UMaterial> GlowstickMaterial;
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Glowstick")

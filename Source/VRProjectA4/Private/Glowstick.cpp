@@ -18,10 +18,6 @@ void AGlowstick::BeginPlay()
 	CurrentTime = 0.f;
 	GrabComponents = K2_GetComponentsByClass(USceneComponent::StaticClass());
 	for (int i = GrabComponents.Num() - 1; i >= 0; i--) {
-		if (Cast<UPointLightComponent>(GrabComponents[i])) {
-			LightComponent = Cast<UPointLightComponent>(GrabComponents[i]);
-			LightComponent->SetIntensity(0.f);
-		}
 		if (GrabComponents[i]->GetName().Contains("MainMesh")) {
 			MainMeshComponent = Cast<USkeletalMeshComponent>(GrabComponents[i]);
 			GlowstickMaterial = MainMeshComponent->GetMaterial(1);
