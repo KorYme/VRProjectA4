@@ -41,8 +41,11 @@ protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Glowstick")
 	float TimeToMaxIntensity = 5.f;
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	float CurrentTime = 0.f;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Glowstick")
+	float ShakeValue = 0.01f;
 	
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Glowstick")
 	FVector InitialGrabLocation;
@@ -77,6 +80,9 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "Glowstick")
 	void Cracked();
 
+	UFUNCTION(BlueprintCallable, Category = "Glowstick")
+	void Shake();
+	
 	UFUNCTION(BlueprintCallable, Category = "Glowstick")
 	void UpdateLightIntensity(const float DeltaTime);
 	
