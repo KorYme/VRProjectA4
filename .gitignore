@@ -63,7 +63,7 @@ Binaries/Win64/*
 !Binaries/Win64/VRProjectA4Editor.target
 !Binaries/Win64/UnrealEditor-VRProjectA4.dll
 # ADD MODULES AND PLUGINS IN PROJECTS TO MAKE GA AND GD LAUNCH EDITOR)
-
+Binaries/Android/*
 
 # Builds
 Build/*
